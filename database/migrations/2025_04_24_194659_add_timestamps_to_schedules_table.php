@@ -12,10 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('schedule', function (Blueprint $table) {
-            $table->renameColumn('train_id', 'cruise_id');
-            $table->renameColumn('first_fee', 'luxury_fee');
-            $table->renameColumn('second_fee', 'general_fee');
-            $table->timestamps();
+            $table->renameColumn('time', 'arrival_time');
+            $table->string('departure_time')->after('time');
         });
     }
 
@@ -24,11 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('schedules', function (Blueprint $table) {
-            $table->renameColumn('cruise_id', 'train_id');
-            $table->renameColumn('luxury_fee', 'first_fee');
-            $table->renameColumn('general_fee', 'second_fee');
-            $table->dropTimestamps();
+        Schema::table('schedule', function (Blueprint $table) {
+            $table->renameColumn('arrival_time', 'time');
+            $table->dropColumn('departure_time');          
         });
     }
 };
